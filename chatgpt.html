@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dave's Adventure</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+    }
+    #output {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 20px;
+      min-height: 150px;
+      background-color: white;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    button:disabled {
+      cursor: not-allowed;
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Dave's Adventure</h1>
+  <div id="output">
+    Welcome, Dave! What will you do today? The choices are endless...
+  </div>
+
+  <button id="option1" onclick="chooseOption(1)">Go to the park</button>
+  <button id="option2" onclick="chooseOption(2)">Stay home and nap</button>
+  <button id="option3" onclick="chooseOption(3)">Make a sandwich</button>
+
+  <script>
+    let currentState = "start";
+
+    function chooseOption(option) {
+      const outputDiv = document.getElementById('output');
+      
+      if (currentState === "start") {
+        if (option === 1) {
+          outputDiv.textContent = "Dave decides to go to the park and gets a frisbee. The air is fresh, and the sky is blue.";
+          setOptions(["Play frisbee", "Take a nap", "Go home"]);
+          currentState = "atPark";
+        } else if (option === 2) {
+          outputDiv.textContent = "Dave stays home and takes a nap. He dreams of being a superhero.";
+          setOptions(["Wake up", "Dream longer", "Grab a snack"]);
+          currentState = "atHome";
+        } else if (option === 3) {
+          outputDiv.textContent = "Dave decides to make a sandwich. He gets bread, cheese, and ham.";
+          setOptions(["Add mayo", "Add pickles", "Eat it right away"]);
+          currentState = "makingSandwich";
+        }
+      } else if (currentState === "atPark") {
+        if (option === 1) {
+          outputDiv.textContent = "Dave throws the frisbee and it lands in a tree. A squirrel gives him a judgmental look.";
+          setOptions(["Try again", "Chase the squirrel", "Go home"]);
+        } else if (option === 2) {
+          outputDiv.textContent = "Dave lies down on the grass, watching clouds. He imagines shapes of all sorts.";
+          setOptions(["Get up", "Nap longer", "Go home"]);
+        } else if (option === 3) {
+          outputDiv.textContent = "Dave decides to head home. The park is nice, but he feels like resting.";
+          setOptions(["Nap at home", "Grab a snack", "Watch TV"]);
+        }
+      } else if (currentState === "atHome") {
+        if (option === 1) {
+          outputDiv.textContent = "Dave wakes up and stretches. It's a good day to be alive!";
+          setOptions(["Go outside", "Grab a coffee", "Start working"]);
+        } else if (option === 2) {
+          outputDiv.textContent = "Dave continues to dream. In his dream, he's the king of a jellybean kingdom.";
+          setOptions(["Wake up", "Keep dreaming", "Get a snack"]);
+        } else if (option === 3) {
+          outputDiv.textContent = "Dave grabs a snack and relaxes. A banana sounds nice right now.";
+          setOptions(["Finish the snack", "Start a new hobby", "Watch TV"]);
+        }
+      } else if (currentState === "makingSandwich") {
+        if (option === 1) {
+          outputDiv.textContent = "Dave adds mayo to the sandwich. It's a creamy masterpiece!";
+          setOptions(["Take a bite", "Make another sandwich", "Share with a friend"]);
+        } else if (option === 2) {
+          outputDiv.textContent = "Dave adds pickles to the sandwich. It's the perfect balance of sour and savory!";
+          setOptions(["Take a bite", "Make another sandwich", "Share with a friend"]);
+        } else if (option === 3) {
+          outputDiv.textContent = "Dave takes a big bite of his sandwich. Delicious!";
+          setOptions(["Enjoy the meal", "Make another sandwich", "Go for a walk"]);
+        }
+      }
+    }
+
+    function setOptions(options) {
+      const buttons = [document.getElementById('option1'), document.getElementById('option2'), document.getElementById('option3')];
+      options.forEach((option, index) => {
+        buttons[index].textContent = option;
+        buttons[index].disabled = false;
+      });
+      buttons.slice(options.length).forEach(button => button.disabled = true);
+    }
+  </script>
+</body>
+</html>
+
