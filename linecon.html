@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beachball Keepy Uppy Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #87CEEB;
+    }
+
+    #game-container {
+      position: relative;
+      width: 400px;
+      height: 600px;
+      background-color: #f0f8ff;
+      border: 2px solid #000;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #beachball {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      background-color: red;
+      border-radius: 50%;
+      bottom: 0;
+      left: 165px;
+      background: conic-gradient(
+        red 0% 33%, 
+        yellow 33% 66%, 
+        blue 66% 100%
+      );
+      border: 4px solid black;
+    }
+
+    #ground {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 10px;
+      background-color: #2f4f4f;
+    }
+
+    /* Crowd section */
+    .crowd {
+      position: absolute;
+      bottom: 40px; /* Placing crowd above the ground */
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 5px;
+    }
+
+    .person {
+      width: 20px;
+      height: 40px;
+      background-color: #000;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .person::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 5px;
+      height: 20px;
+      background-color: #000;
+      transform: translateX(-50%);
+    }
+
+    #game-container::after {
+      content: "Welcome to LineCon! Keep the Beachball Up!";
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      color: black;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="beachball"></div>
+    <div id="ground"></div>
+    
+    <!-- Crowd -->
+    <div class="crowd">
+      <div class="person"></div>
+      <div class="person"></div>
+      <div class="person"></div>
+      <div class="person"></div>
+      <div class="person"></div>
+    </div>
+  </div>
+  
+  <script>
+    let beachball = document.getElementById('beachball');
+    let gameContainer = document.getElementById('game-container');
+    let ballVelocity = 0;
+    let gravity = -0.2;
+    let lift = -10;
+
+    function bounce() {
+        ballVelocity = lift;
+        let ballPosition = parseInt(window.getComputedStyle(beachball).bottom);
+	if (ballPosition< 10) {
+            beachball.style.bottom = '100px';
+        }
+    }
+    document.addEventListener('keydown', function(event) {
+      if (event.code === 'Space') {
+        bounce();			
+      }
+    });
+    document.addEventListener('click', function(event) {
+      bounce();			
+    });
+
+    function gameLoop() {
+      // Apply gravity
+      ballVelocity -= gravity;
+      // Update the beachball's vertical position
+      let ballPosition = parseInt(window.getComputedStyle(beachball).bottom);
+
+      // Prevent the beachball from going below the ground
+      if (ballPosition + ballVelocity <= 0) {
+        ballVelocity = 0; // Stop the ball at the ground
+        beachball.style.bottom = '0px'; // Set ball to ground level
+      } else {
+        // Move the beachball by its velocity
+        beachball.style.bottom = `${ballPosition - ballVelocity}px`;
+      }
+
+      // Request the next frame
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Start the game loop
+    gameLoop();
+  </script>
+</body>
+</html>
+
