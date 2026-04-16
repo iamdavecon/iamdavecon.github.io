@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSTALL MIND ANTIVIRUS</title>
+<style>
+body{background:#000;color:#fff;font-family:monospace;text-align:center;padding-top:6vh}
+input,button{background:#111;color:#0f0;border:1px solid #0f0;padding:10px;margin:5px}
+body.glitch{color:#f00}
+#phase-art{display:block;width:min(360px,72vw);aspect-ratio:1;margin:0 auto 24px;object-fit:cover;border:1px solid #0f0;box-shadow:0 0 28px rgba(0,255,0,.28)}
+body.glitch #phase-art{border-color:#f00;box-shadow:0 0 32px rgba(255,0,0,.32)}
+#bases{margin-top:20px;color:#0f0;word-break:break-word;max-width:60ch;margin:auto}
+</style>
+</head>
+<body>
+
+<img id="phase-art" src="phase-stable.png" alt="">
+<h1 id="title">INSTALL MIND ANTIVIRUS v1.0</h1>
+<p id="status">STATUS: STABLE</p>
+<input id="code" placeholder="Enter Code" style="width:48ch;">
+<button onclick="_0xv()">ENTER</button>
+
+<div id="bases"></div>
+<div id="hint"></div>
+
+<script>
+(function(){
+  let _0xk = false;
+  let a=0;
+
+  const _0xg = (x)=>document['getElementById'](x);
+  const _0xh = (x)=>x['trim']()['toUpperCase']();
+
+  window['_0xv'] = function(){
+    let _0xi = _0xh(_0xg('code')['value']);
+
+    if (!_0xk && _0xi.toLowerCase() === atob('MFhERUFEX0RBNUU=').toLowerCase()) {
+      _0xk = !0;
+
+      document['body']['classList']['add']('glitch');
+      _0xg('status')['innerText'] = 'STATUS: UNSTABLE';
+      _0xg('phase-art')['src'] = 'phase-unstable.png';
+
+      let _0xs = document['createElement']('script');
+      _0xs['src'] = String.fromCharCode(97,110,116,105,118,105,114,117,115,46,106,115);
+
+      document['body']['appendChild'](_0xs);
+      _0xg('hint')['innerText'] = '';
+      //why not give DavePrime a high-5
+      return;
+    }
+
+    a++;
+    if (a == 5) {
+		  _0xg(atob('aGludA=='))[atob('aW5uZXJUZXh0')] = atob('Y2hlY2sgeW91ciBiYWRnZQ==');
+    } 
+    window[atob('YWxlcnQ=')](
+      decodeURIComponent('%49%6e%76%61%6c%69%64%20%63%6f%64%65')
+    );
+  };
+
+  (()=>{
+    let _0xa = window[
+      ['c','o','n','s','o','l','e'].join('')
+    ][
+      ['g','o','l'].reverse().join('')
+    ];
+
+    _0xa(
+      decodeURIComponent('%74%68%65%20%62%6f%64%79%20%69%73%20%6e%6f%74%20%74%68%65%20%73%6f%75%72%63%65')
+    );
+  })();
+})();
+</script>
+
+</body>
+</html>
