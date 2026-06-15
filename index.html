@@ -1,6 +1,679 @@
-<html>
-	<ul>
-		<li><a href="chatgpt.html">ChatGPT's offering</a></li>
-		<li><a href="IamDaveCon.html">Choose your own Daventure</a></li>
-	</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <title>DaveCon | /home</title>
+  <style>
+    :root {
+      --ink: #f4fff8;
+      --paper: #050508;
+      --panel: rgba(9, 14, 22, 0.88);
+      --panel-strong: rgba(12, 18, 30, 0.96);
+      --red: #ff3158;
+      --gold: #faff00;
+      --mint: #00ff9f;
+      --blue: #00d9ff;
+      --violet: #b967ff;
+      --muted: #99afbd;
+      --shadow: 0 0 28px rgba(0, 217, 255, 0.18), 0 0 58px rgba(255, 49, 88, 0.12);
+      --border: 1px solid rgba(0, 255, 159, 0.72);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(0, 255, 159, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 20% 8%, rgba(255, 49, 88, 0.26), transparent 28%),
+        radial-gradient(circle at 78% 18%, rgba(0, 217, 255, 0.22), transparent 30%),
+        linear-gradient(135deg, #030305 0%, #08111b 48%, #040407 100%);
+      background-size: 36px 36px, 36px 36px, cover, cover, cover;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.035) 0,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px,
+        transparent 5px
+      );
+      mix-blend-mode: screen;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1160px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      min-height: 64vh;
+      display: grid;
+      align-items: start;
+      padding: 20px 0 30px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.05rem;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: var(--border);
+      background: #050508;
+      color: var(--gold);
+      box-shadow: 0 0 18px rgba(250, 255, 0, 0.65);
+      transform: rotate(-3deg);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      padding: 7px 10px;
+      border: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      border-color: var(--blue);
+      background: rgba(0, 217, 255, 0.1);
+      color: var(--gold);
+      outline: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+      gap: 26px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 6px 10px;
+      border: 1px solid var(--mint);
+      background: rgba(0, 255, 159, 0.12);
+      color: var(--mint);
+      box-shadow: 0 0 18px rgba(0, 255, 159, 0.28);
+      font-size: 0.9rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-bottom: 12px;
+      font-size: clamp(3.4rem, 11vw, 7.8rem);
+      line-height: 0.86;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-shadow: 4px 0 0 rgba(255, 49, 88, 0.74), -4px 0 0 rgba(0, 217, 255, 0.58), 0 0 34px rgba(250, 255, 0, 0.5);
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      color: var(--blue);
+      text-shadow: 0 0 18px rgba(0, 217, 255, 0.55);
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+    }
+
+    .hero-copy {
+      max-width: 640px;
+      font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+      font-weight: 700;
+      color: #d8f8ff;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 16px;
+      border: var(--border);
+      background: rgba(0, 255, 159, 0.08);
+      box-shadow: 0 0 20px rgba(0, 255, 159, 0.25);
+      color: var(--ink);
+      font-weight: 900;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translate(3px, 3px);
+      box-shadow: 0 0 28px rgba(250, 255, 0, 0.5);
+      color: var(--gold);
+      outline: none;
+    }
+
+    .button.primary {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+      box-shadow: 0 0 26px rgba(255, 49, 88, 0.42);
+    }
+
+    .button.danger {
+      background: rgba(255, 49, 88, 0.14);
+      border-color: var(--gold);
+      color: var(--gold);
+      text-shadow: 0 0 12px rgba(250, 255, 0, 0.6);
+    }
+
+    .status-board {
+      position: relative;
+      border: var(--border);
+      background: var(--panel-strong);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .status-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 14px;
+      border-bottom: var(--border);
+      background: linear-gradient(90deg, rgba(255, 49, 88, 0.38), rgba(0, 217, 255, 0.22));
+      color: var(--gold);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .status-lines {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .status-line {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed rgba(0, 255, 159, 0.32);
+    }
+
+    .status-line:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .label {
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    main {
+      display: grid;
+      gap: 28px;
+      padding-bottom: 64px;
+    }
+
+    section {
+      padding: 34px;
+      border: var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .section-note {
+      max-width: 760px;
+      margin-bottom: 22px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .link-grid,
+    .release-grid,
+    .group-grid,
+    .etc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tile {
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid rgba(0, 255, 159, 0.62);
+      background: linear-gradient(145deg, rgba(0, 217, 255, 0.08), rgba(255, 49, 88, 0.06)), var(--panel-strong);
+      color: var(--ink);
+      text-decoration: none;
+      box-shadow: 0 0 18px rgba(0, 217, 255, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .tile:hover,
+    .tile:focus-visible {
+      transform: translate(2px, 2px);
+      border-color: var(--gold);
+      box-shadow: 0 0 24px rgba(250, 255, 0, 0.34);
+      outline: none;
+    }
+
+    .tile strong,
+    .release strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .tile span,
+    .release span {
+      display: block;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .tile.danger strong {
+      color: var(--gold);
+      text-shadow: 0 0 14px rgba(250, 255, 0, 0.58);
+    }
+
+    .release-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .release {
+      min-height: 120px;
+      padding: 16px;
+      border: 1px solid rgba(0, 217, 255, 0.58);
+      background: var(--panel-strong);
+      text-decoration: none;
+      box-shadow: 0 0 18px rgba(185, 103, 255, 0.24);
+    }
+
+    .release:hover,
+    .release:focus-visible {
+      background: rgba(185, 103, 255, 0.16);
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .badge {
+      padding: 6px 9px;
+      border: 1px solid rgba(0, 255, 159, 0.62);
+      background: rgba(250, 255, 0, 0.1);
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .conduct {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(280px, 1fr);
+      gap: 24px;
+      align-items: center;
+      background: linear-gradient(120deg, rgba(255, 49, 88, 0.18), rgba(0, 217, 255, 0.08)), #030305;
+      color: var(--ink);
+    }
+
+    .conduct h2 {
+      color: var(--gold);
+    }
+
+    .conduct-rule {
+      padding: 22px;
+      border: 1px solid var(--gold);
+      background: var(--red);
+      font-size: clamp(1.7rem, 5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 0.95;
+      text-transform: uppercase;
+      box-shadow: 0 0 34px rgba(255, 49, 88, 0.5), 0 0 18px rgba(250, 255, 0, 0.34);
+      color: #fff;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      border: 1px solid rgba(0, 217, 255, 0.54);
+      background: var(--panel-strong);
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 16px 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    details p {
+      margin: 0;
+      padding: 0 18px 18px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .footer {
+      padding: 34px 0 48px;
+      text-align: center;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .footer span {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 2px solid var(--ink);
+      background: rgba(0, 255, 159, 0.12);
+      color: var(--mint);
+      transform: rotate(1deg);
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .conduct {
+        grid-template-columns: 1fr;
+      }
+
+      .link-grid,
+      .group-grid,
+      .etc-grid,
+      .release-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .shell {
+        width: min(100% - 22px, 1160px);
+      }
+
+      header {
+        min-height: auto;
+        padding: 14px 0 24px;
+      }
+
+      nav,
+      .nav-links {
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+      nav {
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      section {
+        padding: 22px;
+      }
+
+      .link-grid,
+      .group-grid,
+      .etc-grid,
+      .release-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .status-line {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <nav aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="DaveCon home">
+        <span class="brand-mark">D</span>
+        <span>DaveCon</span>
+      </a>
+      <div class="nav-links">
+        <a href="#home">/home</a>
+        <a href="#release-notes">releases</a>
+        <a href="#groups">/groups</a>
+        <a href="#faq">/FAQ</a>
+      </div>
+    </nav>
+
+    <div class="hero" id="top">
+      <div>
+        <p class="eyebrow">Unofficially official, officially Dave</p>
+        <h1>DaveCon</h1>
+        <div class="actions">
+          <a class="button primary" href="https://discord.gg/BdCQY2533X">Enter Davecord</a>
+          <a class="button danger" href="https://dave-tracker.onrender.com/">☣ DaveTracker</a>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <main class="shell">
+    <section id="home">
+      <h2>/home</h2>
+      <p class="section-note">The canonical Dave launchpad, now with enough visual authority to suggest someone may have scheduled a meeting about it.</p>
+      <div class="link-grid">
+        <a class="tile" href="https://discord.gg/BdCQY2533X">
+          <strong>Davecord</strong>
+          <span>Discord, but wearing a DaveCon lanyard and pretending the hallway track has rules.</span>
+        </a>
+        <a class="tile" href="bb/">
+          <strong>Mind Antivirus</strong>
+          <span>Install immediately. Your thoughts have been suspiciously non-Dave lately.</span>
+        </a>
+        <a class="tile danger" href="https://dave-tracker.onrender.com/">
+          <strong>☣ DaveTracker</strong>
+          <span>For locating Dave-adjacent phenomena with enterprise-grade vibes.</span>
+        </a>
+        <a class="tile" href="https://github.com/iamdavecon/davecon">
+          <strong>GitHub Repo</strong>
+          <span>The source of Dave truth, versioned for plausible accountability.</span>
+        </a>
+        <a class="tile" href="https://youtube.com/playlist?list=PL_pqyAOOFqee3YBfCnd7QivPnsgHw53cq&amp;si=p67JWi3JXI8xClyN">
+          <strong>Daveo</strong>
+          <span>A video playlist for when mere written Dave is no longer enough.</span>
+        </a>
+        <a class="tile" href="IamDaveCon.html">
+          <strong>Daventure</strong>
+          <span>Choose your own path, then blame Dave for the consequences.</span>
+        </a>
+
+      </div>
+    </section>
+
+    <section id="release-notes">
+      <h2>Release Notes</h2>
+      <p class="section-note">DaveCon versions are real enough to cite and mysterious enough to make procurement nervous.</p>
+      <div class="release-grid">
+        <a class="release" href="https://docs.google.com/document/d/1AzK0nzqCdaiZECCq4kKoY3V3NjuLak1vkBxOy_BbJ88">
+          <strong>4.2</strong>
+          <span>Distributed Daves as a Service.</span>
+        </a>
+        <a class="release" href="https://photos.google.com/album/AF1QipNXF4XlMEriFp8JZjoelrdq0BK1FxjSZw8ws9ZB">
+          <strong>4.2 Photos</strong>
+          <span>Evidence locker. Do not make eye contact with timestamps.</span>
+        </a>
+        <a class="release" href="https://docs.google.com/document/d/1oaGeMpaKX69vDvRT8u-n9noyw66Tj9VWQcM_10Sb85A">
+          <strong>3.14</strong>
+          <span>Round, irrational, deliciously documented.</span>
+        </a>
+        <a class="release" href="https://docs.google.com/document/d/19L7Xp_Kvz2vSCQtCk9RlQ3hHlzpowm8FXnbNuoqx-NI">
+          <strong>2.1</strong>
+          <span>Electric (r)evolution.</span>
+        </a>
+        <a class="release" href="https://docs.google.com/document/d/10pknMyp7eMQa5K1S5WkilPujUupOhHGwtNkq9URTMqg">
+          <strong>1.0</strong>
+          <span>The first stable Dave. Allegedly.</span>
+        </a>
+        <a class="release" href="https://docs.google.com/document/d/1GsItmplrJTlb02CClvNM4Jv8sW6bOXMFimozth7cOLA/edit#bookmark=id.o19r0bhabfy6">
+          <strong>0.0 Beta</strong>
+          <span>Before DaveCon learned to stand upright.</span>
+        </a>
+        <a class="release" href="https://docs.google.com/spreadsheets/d/15o3z7wlktAaBD_ks78MG4lJwL-hXyvGHKvHQhCpbPlI">
+          <strong>Index</strong>
+          <span>The spreadsheet knows what you did last conference.</span>
+        </a>
+      </div>
+      <div class="badge-row" aria-label="Release descriptors">
+        <span class="badge">Patch notes may contain lore</span>
+      </div>
+    </section>
+
+    <section class="conduct" id="conduct">
+      <div>
+        <h2>Code of Conduct</h2>
+      </div>
+      <div class="conduct-rule">Don't be an asshole</div>
+    </section>
+
+    <section id="groups">
+      <h2>/groups</h2>
+      <p class="section-note">Friends, neighbors, villages, side quests, and other groups brave enough to stand near the DaveCon gravity well.</p>
+      <div class="group-grid">
+        <a class="tile" href="https://toxicbbq.org/"><strong>🍖 ToxicBBQ</strong><span>Smoke, signal, sauce, possibly prophecy.</span></a>
+        <a class="tile" href="http://discord.gg/URRBHAH"><strong>🌶️ PepperCon</strong><span>Spicy community packet delivery.</span></a>
+        <a class="tile" href="https://dchhv.org/"><strong>⚙️ Hardware Hacking Village</strong><span>Where the screws have lore.</span></a>
+        <a class="tile" href="https://vetconactual.com/"><strong>🎖️ VETCON</strong><span>Actual, important, and substantially less fake than this sentence.</span></a>
+        <a class="tile" href="http://gamehacking.gg/"><strong>🎮 Game Hacking Village</strong><span>Press start to question assumptions.</span></a>
+        <a class="tile" href="https://defcon.social/@DCCoolerCon"><strong>🍻 CoolerCon</strong><span>Hydration, refrigeration, social federation.</span></a>
+        <a class="tile" href="https://x.com/HackerJeopardy"><strong>🙅 Hacker Jeopardy</strong><span>Answers first, chaos immediately after.</span></a>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>/FAQ</h2>
+      <div class="faq-list">
+        <details open>
+          <summary>Who is Dave?</summary>
+          <p>You are, Dave. It has been you, the whole time. Ooooh...</p>
+        </details>
+        <details open>
+          <summary>What is DaveCon?</summary>
+          <p>Well, you're looking at it, right now, so you tell me.</p>
+        </details>
+        <details open>
+          <summary>Where is DaveCon?</summary>
+          <p>It's right behind you.</p>
+        </details>
+        <details open>
+          <summary>How do I find DaveCon?</summary>
+          <p>DaveCon finds you.</p>
+        </details>
+        <details open>
+          <summary>When is DaveCon?</summary>
+          <p>DaveCon is Now.</p>
+        </details>
+        <details open>
+          <summary>Why is DaveCon?</summary>
+          <p>Whoa...</p>
+        </details>
+        <details open>
+          <summary>Is DaveCon canceled?</summary>
+          <p>Hell no.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="etc">
+      <h2>/etc</h2>
+      <p class="section-note">Administrative artifacts, ceremonial textiles, and the paperwork that suggests DaveCon might have a budget.</p>
+      <div class="etc-grid">
+        <a class="tile" href="https://docs.google.com/document/d/1xD2UYkxgxq0pVlsspBh7p6MTt-f27si2HRmzDTAMbco">
+          <strong>Planning</strong>
+          <span>Somewhere in here is the plan. It knows what it did.</span>
+        </a>
+        <a class="tile" href="https://www.customink.com/designs/davecon/apd0-00cw-dw0j/hotlink?pc=HL-191722&amp;utm_content=viewbutton&amp;oe=48254601-b5400&amp;utm_source=Hotlink&amp;utm_medium=email&amp;utm_campaign=Hotlink%202%20Variation%20C%20%28XRBaF3%29&amp;_kx=1wBxeqnCqXpNGinsWlnoIdyXBbABsIecjvSD8uSQAhg.SKGNUp">
+          <strong>T-shirt</strong>
+          <span>Wearable minutes from the meeting Dave did not attend.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>DaveCon is Now. Please remain Dave.</span>
+  </footer>
+</body>
 </html>
