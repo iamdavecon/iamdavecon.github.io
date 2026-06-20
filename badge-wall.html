@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <title>DaveCon | Badge Wall</title>
+  <style>
+    :root {
+      --ink: #f4fff8;
+      --paper: #050508;
+      --panel: rgba(9, 14, 22, 0.9);
+      --panel-strong: rgba(12, 18, 30, 0.98);
+      --red: #ff3158;
+      --gold: #faff00;
+      --mint: #00ff9f;
+      --blue: #00d9ff;
+      --violet: #b967ff;
+      --muted: #99afbd;
+      --border: 1px solid rgba(0, 255, 159, 0.72);
+      --shadow: 0 0 28px rgba(0, 217, 255, 0.18), 0 0 58px rgba(255, 49, 88, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(0, 255, 159, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 217, 255, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 18% 8%, rgba(255, 49, 88, 0.24), transparent 28%),
+        radial-gradient(circle at 82% 18%, rgba(0, 217, 255, 0.2), transparent 30%),
+        linear-gradient(135deg, #030305 0%, #08111b 48%, #040407 100%);
+      background-size: 36px 36px, 36px 36px, cover, cover, cover;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.035) 0,
+        rgba(255, 255, 255, 0.035) 1px,
+        transparent 1px,
+        transparent 5px
+      );
+      mix-blend-mode: screen;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 20px 0 28px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 30px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 1.05rem;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: var(--border);
+      background: #050508;
+      color: var(--gold);
+      box-shadow: 0 0 18px rgba(250, 255, 0, 0.65);
+      transform: rotate(-3deg);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      padding: 7px 10px;
+      border: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      border-color: var(--blue);
+      background: rgba(0, 217, 255, 0.1);
+      color: var(--gold);
+      outline: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+      gap: 28px;
+      align-items: end;
+      min-height: 44vh;
+      padding: 30px 0 20px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      padding: 6px 10px;
+      border: 1px solid var(--mint);
+      background: rgba(0, 255, 159, 0.12);
+      color: var(--mint);
+      box-shadow: 0 0 18px rgba(0, 255, 159, 0.28);
+      font-size: 0.9rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 880px;
+      margin-bottom: 12px;
+      color: var(--gold);
+      font-size: clamp(3.2rem, 10vw, 7.5rem);
+      line-height: 0.86;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      text-shadow: 4px 0 0 rgba(255, 49, 88, 0.74), -4px 0 0 rgba(0, 217, 255, 0.58), 0 0 34px rgba(250, 255, 0, 0.5);
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      color: var(--blue);
+      font-size: clamp(2rem, 5vw, 4.1rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(0, 217, 255, 0.55);
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1.18rem;
+      line-height: 1.12;
+      text-transform: uppercase;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: #d8f8ff;
+      font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+      font-weight: 700;
+    }
+
+    .hero-panel,
+    .controls,
+    .details {
+      border: var(--border);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel {
+      padding: 16px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .stat {
+      min-height: 84px;
+      padding: 12px;
+      border: 1px solid rgba(0, 217, 255, 0.38);
+      background: rgba(0, 217, 255, 0.08);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    main {
+      padding: 10px 0 48px;
+    }
+
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: minmax(210px, 1fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 22px;
+      padding: 12px;
+      backdrop-filter: blur(14px);
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    input,
+    select,
+    button {
+      min-height: 42px;
+      border-radius: 0;
+      font: inherit;
+      font-weight: 800;
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 1px solid rgba(0, 217, 255, 0.58);
+      background: #050508;
+      color: var(--ink);
+      padding: 9px 10px;
+    }
+
+    button {
+      border: 1px solid rgba(250, 255, 0, 0.8);
+      background: rgba(250, 255, 0, 0.12);
+      color: var(--gold);
+      cursor: pointer;
+      padding: 9px 12px;
+      text-transform: uppercase;
+    }
+
+    input:focus-visible,
+    select:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .control-field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .wall-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .badge-card {
+      display: grid;
+      gap: 12px;
+      min-height: 390px;
+      padding: 12px;
+      border: 1px solid rgba(153, 175, 189, 0.32);
+      background: rgba(5, 5, 8, 0.72);
+      color: var(--ink);
+      text-decoration: none;
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    .badge-card:hover,
+    .badge-card:focus-visible,
+    .badge-card.active {
+      transform: translate(3px, 3px);
+      border-color: var(--gold);
+      box-shadow: 0 0 24px rgba(250, 255, 0, 0.22);
+      outline: none;
+    }
+
+    .badge-card.pending {
+      opacity: 0.74;
+    }
+
+    .badge-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 188px;
+      overflow: hidden;
+      border: 1px solid var(--accent);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 32%, transparent), transparent 45%),
+        radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--second) 35%, transparent), transparent 32%),
+        #050508;
+      isolation: isolate;
+    }
+
+    .badge-art::before {
+      content: "";
+      position: absolute;
+      width: 122px;
+      height: 154px;
+      border: 3px solid var(--accent);
+      background:
+        linear-gradient(90deg, transparent 48%, color-mix(in srgb, var(--accent) 60%, transparent) 49% 51%, transparent 52%),
+        repeating-linear-gradient(0deg, color-mix(in srgb, var(--second) 32%, transparent) 0 5px, transparent 5px 12px),
+        rgba(255, 255, 255, 0.035);
+      clip-path: polygon(14% 0, 86% 0, 100% 18%, 100% 78%, 50% 100%, 0 78%, 0 18%);
+      box-shadow: 0 0 26px color-mix(in srgb, var(--accent) 48%, transparent);
+      transform: rotate(var(--tilt));
+      z-index: -1;
+    }
+
+    .badge-art::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px dashed color-mix(in srgb, var(--second) 72%, transparent);
+      opacity: 0.72;
+    }
+
+    .badge-art.has-image {
+      background:
+        radial-gradient(circle at 50% 45%, rgba(244, 255, 248, 0.12), transparent 54%),
+        linear-gradient(135deg, color-mix(in srgb, var(--accent) 24%, transparent), rgba(5, 5, 8, 0.92));
+    }
+
+    .badge-art.has-image::before,
+    .badge-art.has-image::after {
+      opacity: 0.38;
+    }
+
+    .badge-art img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 176px;
+      object-fit: contain;
+      padding: 10px;
+      filter: drop-shadow(0 0 16px color-mix(in srgb, var(--accent) 50%, transparent));
+    }
+
+    .details .badge-art img {
+      max-height: 212px;
+    }
+
+    .badge-year {
+      display: grid;
+      place-items: center;
+      width: 88px;
+      height: 88px;
+      border: 2px solid var(--gold);
+      background: rgba(5, 5, 8, 0.86);
+      color: var(--gold);
+      font-size: 1.55rem;
+      font-weight: 900;
+      text-shadow: 0 0 14px rgba(250, 255, 0, 0.58);
+    }
+
+    .badge-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .badge-meta span {
+      border: 1px solid rgba(153, 175, 189, 0.32);
+      padding: 4px 6px;
+      background: rgba(153, 175, 189, 0.08);
+    }
+
+    .synopsis {
+      margin: 0;
+      color: #d8f8ff;
+      font-size: 0.96rem;
+    }
+
+    .details {
+      position: sticky;
+      top: 92px;
+      padding: 16px;
+    }
+
+    .details .badge-art {
+      min-height: 220px;
+      margin-bottom: 14px;
+    }
+
+    .detail-title {
+      color: var(--gold);
+    }
+
+    .detail-link {
+      display: inline-flex;
+      justify-content: center;
+      width: 100%;
+      min-height: 46px;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: var(--border);
+      background: rgba(0, 255, 159, 0.08);
+      box-shadow: 0 0 20px rgba(0, 255, 159, 0.25);
+      font-weight: 900;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .detail-link:hover,
+    .detail-link:focus-visible {
+      color: var(--gold);
+      outline: none;
+    }
+
+    .empty {
+      display: none;
+      padding: 26px;
+      border: 1px solid rgba(255, 49, 88, 0.58);
+      background: rgba(255, 49, 88, 0.08);
+      color: #ffd8df;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .empty.show {
+      display: block;
+    }
+
+    footer {
+      padding: 24px 0 36px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .wall-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .details {
+        position: static;
+        order: -1;
+      }
+    }
+
+    @media (max-width: 720px) {
+      nav,
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .controls {
+        position: static;
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <nav aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="DaveCon home">
+        <span class="brand-mark">D</span>
+        <span>DaveCon</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">/home</a>
+        <a href="#wall">/wall</a>
+        <a href="https://docs.google.com/spreadsheets/d/15o3z7wlktAaBD_ks78MG4lJwL-hXyvGHKvHQhCpbPlI/edit">source sheet</a>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Virtual badge wall</p>
+        <h1>Badge Wall</h1>
+        <p class="hero-copy">A clickable shelf of DEF CON, DaveCon, and PhreakNIC write-ups. </p>
+      </div>
+      <aside class="hero-panel" aria-label="Badge wall statistics">
+        <div class="stat-grid">
+          <div class="stat"><strong id="total-count">25</strong><span>indexed rows</span></div>
+          <div class="stat"><strong id="linked-count">24</strong><span>write-up links</span></div>
+          <div class="stat"><strong>2006</strong><span>first entry</span></div>
+          <div class="stat"><strong>2026</strong><span>latest row</span></div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="shell" id="wall">
+    <section class="controls" aria-label="Badge wall controls">
+      <div class="control-field">
+        <label for="search">Search</label>
+        <input id="search" type="search" placeholder="Search year, venue, synopsis...">
+      </div>
+      <div class="control-field">
+        <label for="event-filter">Event</label>
+        <select id="event-filter">
+          <option value="all">All events</option>
+          <option value="DEF CON">DEF CON</option>
+          <option value="PhreakNIC">PhreakNIC</option>
+        </select>
+      </div>
+      <div class="control-field">
+        <label for="sort-order">Sort</label>
+        <select id="sort-order">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="words">Longest write-up</option>
+        </select>
+      </div>
+      <button type="button" id="random-pick">Random badge</button>
+    </section>
+
+    <section class="wall-layout">
+      <div>
+        <div class="empty" id="empty-state">No badges match that filter.</div>
+        <div class="badge-grid" id="badge-grid" aria-live="polite"></div>
+      </div>
+      <aside class="details" id="details" aria-live="polite"></aside>
+    </section>
+  </main>
+
+  <footer class="shell">
+    Built from the Google Sheet named Index, tab Sheet1. Real badge thumbnails are loaded from the exported sheet resources, with generated art used only where a thumbnail is missing.
+  </footer>
+
+  <script>
+    const badges = [
+      { title: "2006 - DEF CON 14", year: 2006, event: "DEF CON", location: "Riviera", attendees: "", words: 1689, count: 1, image: "badge-wall/DC14.png", link: "https://docs.google.com/document/d/1CYHrL5f7RB9Euj-vb7fVBVvJgf86Mzr54suTziqo9GM/edit", synopsis: "First DEF CON trip report: arrival jitters, Toxic BBQ, hallway introductions, talks, Hacker Jeopardy, late-night wandering, and the first real feeling of finding a second home." },
+      { title: "2007 - DEF CON 15", year: 2007, event: "DEF CON", location: "Riviera", attendees: "", words: 1744, count: 2, image: "badge-wall/DC15.png", link: "https://docs.google.com/document/d/1jC6n4SAwQXHDq6dSu5t0yJ1jPqWpleWAbqNKE2SywrQ/edit", synopsis: "A return to the Riviera era, with the rhythm of travel, talks, parties, familiar faces, and the con beginning to feel less like accident and more like ritual." },
+      { title: "2008 - DEF CON 16", year: 2008, event: "DEF CON", location: "Riviera", attendees: "8,000", words: 2184, count: 3, image: "badge-wall/DC16.png", link: "https://docs.google.com/document/d/1pYhBdotWzTOMQp_YS9KdlVfRFJXvfoiTrWFg4SmEV8s/edit", synopsis: "Riviera notes from a growing con: packed rooms, hallway lore, escalating friendships, and the kind of strange moments that become permanent reference points years later." },
+      { title: "2009 - DEF CON 17", year: 2009, event: "DEF CON", location: "Riviera", attendees: "", words: 1339, count: 4, image: "badge-wall/DC17.png", link: "https://docs.google.com/document/d/17fU6gzN_swk2ydoSpzNF_yLklJif3GzDx2M1yuEr2d0/edit", synopsis: "A compact field report from the Riviera, built around con momentum, talk fragments, social drift, and the ongoing attempt to turn noise into memory." },
+      { title: "2010 - DEF CON 18", year: 2010, event: "DEF CON", location: "Riviera", attendees: "", words: 2495, count: 5, image: "badge-wall/DC18.png", link: "https://docs.google.com/document/d/1lnrpU3XsP6V8EE6yCodgKpJql-umXaFWto8U5Kn2IxQ/edit", synopsis: "Another Riviera chapter, mixing travel notes, technical curiosity, Vegas weirdness, and the recurring search for the right people in the right hallway at the right hour." },
+      { title: "2011 - DEF CON 19", year: 2011, event: "DEF CON", location: "Rio", attendees: "", words: 1197, count: 6, image: "badge-wall/DC19.png", link: "https://docs.google.com/document/d/1FnRgWiPpgty_qNhtdrVAuiiAoOBAmU9gHmpzxh9crGc/edit#heading=h.govwr4dcvcjw", synopsis: "The Rio era begins: a shorter write-up about venue shift, con continuity, and the familiar work of reassembling the tribe in a new map." },
+      { title: "2011 - PhreakNIC 15", year: 2011, event: "PhreakNIC", location: "Days Inn", attendees: "", words: 1074, count: 1, image: "badge-wall/PN15.png", link: "https://docs.google.com/document/d/1bKdLK1Ox57am6u1aJ5ksn5ehjhJd2z2k9FL3ADNx77s/edit", synopsis: "A PhreakNIC side quest at the Days Inn, with a smaller-con texture, tighter rooms, local energy, and the same habit of collecting scenes in motion." },
+      { title: "2012 - DEF CON 20", year: 2012, event: "DEF CON", location: "Rio", attendees: "", words: 6369, count: 7, image: "badge-wall/DC20.png", link: "https://docs.google.com/document/d/1xm1-fDl5kvDHaZJSvPMrH5-DdyIfNph05D_turKDFqE/edit", synopsis: "A large Rio write-up for DEF CON 20, full of anniversary weight, sessions, crowds, parties, reconnecting, and the layered mythology that accumulates after seven years." },
+      { title: "2013 - DEF CON 21", year: 2013, event: "DEF CON", location: "Rio", attendees: "12,000", words: 3734, count: 8, image: "badge-wall/DC21.png", link: "https://docs.google.com/document/d/1lIG_3fjEeHrEgRAs0KIli-ShOhB_d4rfFclYjwonDm4/edit", synopsis: "A 12,000-person Rio year with more crowd pressure, more familiar circuits, and the balancing act between talks, friends, hallway gravity, and exhaustion." },
+      { title: "2014 - DEF CON 22", year: 2014, event: "DEF CON", location: "Rio", attendees: "16,000", words: 3760, count: 9, image: "badge-wall/DC22.png", link: "https://docs.google.com/document/d/1O_oirBjVROHf_h7YoDuoh1A-52Ht_u4j-lF0ztQhUyQ/edit", synopsis: "The Rio keeps swelling: a 16,000-attendee trip through talks, line dynamics, evening wandering, and the weird comfort of being surrounded by the right kind of chaos." },
+      { title: "2014 - PhreakNIC 18", year: 2014, event: "PhreakNIC", location: "Millennium Maxwell", attendees: "", words: 1602, count: 2, image: "badge-wall/PN18.png", link: "https://docs.google.com/document/d/1B-Rwu8bwxVaGC2mLQfNuM_6fkNlQm2BV6BDi63rH7yE/edit", synopsis: "PhreakNIC at the Millennium Maxwell, a smaller and more personal counterpoint to Vegas with talks, friends, and regional hacker-con flavor." },
+      { title: "2015 - DEF CON 23", year: 2015, event: "DEF CON", location: "Paris/Ballys", attendees: "16,000", words: 4888, count: 10, image: "badge-wall/DC23.png", link: "https://docs.google.com/document/d/1vFZRwV2hmBbPV3DAAsq99GrsD0PoLFlQJFjtMZvDqPc/edit", synopsis: "Paris and Bally's become home base for the tenth DEF CON trip, with new venue flow, dense notes, and a decade of con instincts steering the route." },
+      { title: "2015 - PhreakNIC 19", year: 2015, event: "PhreakNIC", location: "Clarion", attendees: "", words: 1611, count: 3, image: "badge-wall/PN19.png", link: "https://docs.google.com/document/d/1zy-Uvej-8COZghY12MCJNjM2u1yWiw-5v9oa0P-MqxU/edit", synopsis: "A Clarion PhreakNIC visit with small-con pace, approachable conversations, and a different kind of hacker community orbit." },
+      { title: "2016 - DEF CON 24", year: 2016, event: "DEF CON", location: "Paris/Ballys", attendees: "22,000", words: 4839, count: 11, image: "badge-wall/DC24.png", link: "https://docs.google.com/document/d/1DAkBf0XbJD6Cn0WmnmiNOQaEMraJr8yKJvlLTO4IZds/edit#heading=h.m3qrnm61mryp", synopsis: "A 22,000-attendee Paris/Bally's year, tracking the bigger con machine, familiar traditions, new encounters, and the strain of keeping up with all of it." },
+      { title: "2017 - DEF CON 25", year: 2017, event: "DEF CON", location: "Caesars", attendees: "25,000", words: 9068, count: 12, image: "badge-wall/DC25.png", link: "https://docs.google.com/document/d/1AxKBsyXtjZXLuT6bWRWyJjXGIC21ReDdvXnlxG_t_X4/edit?usp=drive_web&ouid=114663026876202386801", synopsis: "A sprawling Caesars report with tacos, tinfoil hats, Kasparov, voting machines, Hacker Jeopardy, music, guerrilla parties, genetics, moonshine, and a triumphant 50 percent taco achievement." },
+      { title: "2018 - DEF CON 26", year: 2018, event: "DEF CON", location: "Caesars", attendees: "28,000", words: 6802, count: 13, image: "badge-wall/DC26.png", link: "https://docs.google.com/document/d/12PIGvfpD192hh8Jk465M2pY4-vRkonKlGN7iKJwzOf4/edit", synopsis: "Caesars grows again, bringing bigger crowds, deeper friend networks, badge-life energy, talks, late nights, and the increasingly practiced art of con survival." },
+      { title: "2019 - DEF CON 27", year: 2019, event: "DEF CON", location: "Paris/Ballys", attendees: "30,000", words: 3599, count: 14, image: "badge-wall/DC27.png", link: "https://docs.google.com/document/d/1mlK7W0QJOLGrEEgJ3pC8fKKJj2KAhhK4WS1RoehJ7QU/edit", synopsis: "A 30,000-person Paris/Bally's report, catching the pre-pandemic peak with crowded routes, old friends, con logistics, and the last normal DEF CON before the gap." },
+      { title: "2020 - DEF CON 28", year: 2020, event: "DEF CON", location: "Home", attendees: "", words: 0, count: 0, link: "https://docs.google.com/document/d/1CfiZTiDRKkitCcn2fAEY-ePoVzDuG9vs9opz6Ibl1yk/edit", synopsis: "The cancelled-at-home year: the badge column says it all, a sad little placeholder for the pandemic-shaped absence where Vegas should have been." },
+      { title: "2021 - DEF CON 29 / DaveCon 0x0", year: 2021, event: "DEF CON", location: "Paris/Ballys", attendees: "8,700", words: 0, count: 15, image: "badge-wall/DC29.png", link: "https://docs.google.com/document/d/1GsItmplrJTlb02CClvNM4Jv8sW6bOXMFimozth7cOLA/edit#", synopsis: "DEF CON returns in smaller form, with DaveCon 0x0 riding along: masked logistics, lower attendance, re-entry nerves, and the first fresh spark after the shutdown." },
+      { title: "2022 - DEF CON 30 / DaveCon 1.0", year: 2022, event: "DEF CON", location: "Caesars Forum", attendees: "25,000", words: 0, count: 16, image: "badge-wall/DC30.png", link: "https://docs.google.com/document/d/10pknMyp7eMQa5K1S5WkilPujUupOhHGwtNkq9URTMqg/edit#", synopsis: "DaveCon 1.0 at Caesars Forum, with the con back near full scale and the Dave layer starting to look less like a joke and more like infrastructure." },
+      { title: "2023 - DEF CON 31 / DaveCon 2.1", year: 2023, event: "DEF CON", location: "Caesars Forum", attendees: "25,000", words: 0, count: 17, image: "badge-wall/DC31.png", link: "https://docs.google.com/document/d/19L7Xp_Kvz2vSCQtCk9RlQ3hHlzpowm8FXnbNuoqx-NI/edit", synopsis: "DaveCon 2.1 keeps building the mythos around DEF CON 31, with badge distribution, friends, jokes that become systems, and the Caesars Forum crowd flow." },
+      { title: "2023 - PhreakNIC 24", year: 2023, event: "PhreakNIC", location: "Clarion", attendees: "157", words: 0, count: 4, image: "badge-wall/PN24.png", link: "https://docs.google.com/document/d/1n4aDrIvLtfdLTO3mX3DbZxsHTg_jl_SsO1NS2ok_07Q/edit", synopsis: "A tiny-by-comparison PhreakNIC 24, just 157 attendees, with the Clarion giving the write-up a more intimate, local, close-quarters hacker feel." },
+      { title: "2024 - DEF CON 32 / DaveCon 3.14", year: 2024, event: "DEF CON", location: "LVCC", attendees: "27,000", words: 0, count: 18, image: "badge-wall/DC32.png", link: "https://docs.google.com/document/d/1oaGeMpaKX69vDvRT8u-n9noyw66Tj9VWQcM_10Sb85A/edit", synopsis: "DaveCon 3.14 lands at LVCC with $2 hot dogs, Dave badges, Toxic BBQ, badge hacking, Hacker Jeopardy, cheese diplomacy, sticker swarms, and the ongoing search for a new hub bar." },
+      { title: "2025 - DEF CON 33 / DaveCon 4.2", year: 2025, event: "DEF CON", location: "LVCC", attendees: "26,000", words: 0, count: 19, image: "badge-wall/DC33.png", link: "https://docs.google.com/document/d/1AzK0nzqCdaiZECCq4kKoY3V3NjuLak1vkBxOy_BbJ88", synopsis: "The DaveCon 4.2 row points to the newest linked write-up: LVCC again, a fresh badge year, and the next iteration of the DaveCon running joke turned field operation." },
+      { title: "2026 - DEF CON 34 / DaveCon V", year: 2026, event: "DEF CON", location: "LVCC", attendees: "", words: 0, count: 20, link: "", synopsis: "Future row from the index: DEF CON 34 and DaveCon V are staged for LVCC, with the write-up link still pending." }
+    ];
+
+    const palette = [
+      ["#00ff9f", "#ff3158"], ["#00d9ff", "#faff00"], ["#b967ff", "#00ff9f"],
+      ["#ff3158", "#00d9ff"], ["#faff00", "#b967ff"], ["#7cffcb", "#ff7a3d"]
+    ];
+
+    const grid = document.querySelector("#badge-grid");
+    const details = document.querySelector("#details");
+    const emptyState = document.querySelector("#empty-state");
+    const search = document.querySelector("#search");
+    const eventFilter = document.querySelector("#event-filter");
+    const sortOrder = document.querySelector("#sort-order");
+    const randomPick = document.querySelector("#random-pick");
+    let activeTitle = badges[0].title;
+
+    document.querySelector("#total-count").textContent = badges.length;
+    document.querySelector("#linked-count").textContent = badges.filter((badge) => badge.link).length;
+
+    function styleForBadge(badge) {
+      const colors = palette[(badge.year + badge.count) % palette.length];
+      const tilt = ((badge.count || badge.year) % 7) - 3;
+      return `--accent:${colors[0]};--second:${colors[1]};--tilt:${tilt}deg;`;
+    }
+
+    function metaText(badge) {
+      const bits = [badge.location];
+      if (badge.attendees) bits.push(`${badge.attendees} attendees`);
+      if (badge.words) bits.push(`${badge.words.toLocaleString()} words`);
+      if (badge.count) bits.push(`#${badge.count}`);
+      return bits.filter(Boolean);
+    }
+
+    function badgeArt(badge) {
+      if (badge.image) {
+        return `
+          <div class="badge-art has-image" style="${styleForBadge(badge)}" role="img" aria-label="Badge thumbnail for ${badge.title}">
+            <img src="${badge.image}" alt="${badge.title} badge thumbnail" loading="lazy">
+          </div>
+        `;
+      }
+
+      return `
+        <div class="badge-art" style="${styleForBadge(badge)}" role="img" aria-label="Generated badge art for ${badge.title}">
+          <span class="badge-year">${badge.year}</span>
+        </div>
+      `;
+    }
+
+    function matchesFilters(badge) {
+      const term = search.value.trim().toLowerCase();
+      const haystack = `${badge.title} ${badge.event} ${badge.location} ${badge.attendees} ${badge.synopsis}`.toLowerCase();
+      const eventMatches = eventFilter.value === "all" || badge.event === eventFilter.value;
+      return eventMatches && (!term || haystack.includes(term));
+    }
+
+    function sortedBadges(list) {
+      const sorted = [...list];
+      if (sortOrder.value === "oldest") {
+        sorted.sort((a, b) => a.year - b.year || a.title.localeCompare(b.title));
+      } else if (sortOrder.value === "words") {
+        sorted.sort((a, b) => b.words - a.words || b.year - a.year);
+      } else {
+        sorted.sort((a, b) => b.year - a.year || b.title.localeCompare(a.title));
+      }
+      return sorted;
+    }
+
+    function renderDetails(badge) {
+      details.innerHTML = `
+        ${badgeArt(badge)}
+        <h2 class="detail-title">${badge.title}</h2>
+        <div class="badge-meta">${metaText(badge).map((item) => `<span>${item}</span>`).join("")}</div>
+        <p class="synopsis" style="margin-top:12px;">${badge.synopsis}</p>
+        ${badge.link ? `<a class="detail-link" href="${badge.link}">Open write-up</a>` : `<span class="detail-link" aria-disabled="true">Write-up pending</span>`}
+      `;
+    }
+
+    function render() {
+      const visible = sortedBadges(badges.filter(matchesFilters));
+      if (!visible.some((badge) => badge.title === activeTitle) && visible.length) {
+        activeTitle = visible[0].title;
+      }
+
+      grid.innerHTML = visible.map((badge) => {
+        const href = badge.link || "#details";
+        const classes = ["badge-card", badge.title === activeTitle ? "active" : "", badge.link ? "" : "pending"].filter(Boolean).join(" ");
+        return `
+          <a class="${classes}" href="${href}" data-title="${badge.title}" ${badge.link ? "" : "aria-disabled=\"true\""}>
+            ${badgeArt(badge)}
+            <div>
+              <h3>${badge.title}</h3>
+              <div class="badge-meta">${metaText(badge).map((item) => `<span>${item}</span>`).join("")}</div>
+            </div>
+            <p class="synopsis">${badge.synopsis}</p>
+          </a>
+        `;
+      }).join("");
+
+      emptyState.classList.toggle("show", visible.length === 0);
+      const active = badges.find((badge) => badge.title === activeTitle) || visible[0];
+      if (active) renderDetails(active);
+    }
+
+    grid.addEventListener("click", (event) => {
+      const card = event.target.closest(".badge-card");
+      if (!card) return;
+      const badge = badges.find((item) => item.title === card.dataset.title);
+      if (!badge) return;
+      activeTitle = badge.title;
+      renderDetails(badge);
+      document.querySelectorAll(".badge-card").forEach((item) => item.classList.toggle("active", item.dataset.title === activeTitle));
+      if (!badge.link) event.preventDefault();
+    });
+
+    grid.addEventListener("mouseover", (event) => {
+      const card = event.target.closest(".badge-card");
+      if (!card) return;
+      const badge = badges.find((item) => item.title === card.dataset.title);
+      if (badge) {
+        activeTitle = badge.title;
+        renderDetails(badge);
+        document.querySelectorAll(".badge-card").forEach((item) => item.classList.toggle("active", item.dataset.title === activeTitle));
+      }
+    });
+
+    [search, eventFilter, sortOrder].forEach((control) => control.addEventListener("input", render));
+
+    randomPick.addEventListener("click", () => {
+      const visible = sortedBadges(badges.filter(matchesFilters));
+      if (!visible.length) return;
+      const badge = visible[Math.floor(Math.random() * visible.length)];
+      activeTitle = badge.title;
+      render();
+      const card = document.querySelector(`[data-title="${CSS.escape(badge.title)}"]`);
+      if (card) card.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
+
+    render();
+  </script>
+</body>
+</html>
