@@ -69,7 +69,7 @@
     }
 
     header {
-      padding: 20px 0 28px;
+      padding: 20px 0 10px;
     }
 
     nav {
@@ -77,7 +77,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      margin-bottom: 30px;
+      margin-bottom: 22px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0;
@@ -126,11 +126,10 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
-      gap: 28px;
-      align-items: end;
-      min-height: 44vh;
-      padding: 30px 0 20px;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      padding: 10px 0 0;
     }
 
     .eyebrow {
@@ -197,7 +196,7 @@
     }
 
     main {
-      padding: 10px 0 48px;
+      padding: 8px 0 48px;
     }
 
     .controls {
@@ -205,7 +204,7 @@
       top: 0;
       z-index: 5;
       display: grid;
-      grid-template-columns: minmax(210px, 1fr) minmax(150px, auto) minmax(170px, auto);
+      grid-template-columns: 1fr;
       gap: 12px;
       align-items: center;
       margin-bottom: 22px;
@@ -387,16 +386,11 @@
     }
 
     .content-search {
-      display: none;
       margin-bottom: 22px;
       padding: 14px;
       border: var(--border);
       background: var(--panel);
       box-shadow: var(--shadow);
-    }
-
-    .content-search.show {
-      display: block;
     }
 
     .content-search-form {
@@ -523,18 +517,8 @@
   <main class="shell" id="wall">
     <section class="controls" aria-label="Badge wall controls">
       <div class="control-field">
-        <label for="search">Filter badges</label>
-        <input id="search" type="search" placeholder="Search year, venue, synopsis...">
+        <input id="search" type="search" placeholder="Filter by year, venue, synopsis...">
       </div>
-      <div class="control-field">
-        <label for="sort-order">Sort</label>
-        <select id="sort-order">
-          <option value="newest">Newest first</option>
-          <option value="oldest">Oldest first</option>
-          <option value="words">Longest write-up</option>
-        </select>
-      </div>
-      <button type="button" id="search-toggle" aria-expanded="false" aria-controls="content-search">Search content</button>
     </section>
 
     <section class="content-search" id="content-search" aria-label="Write-up content search">
@@ -599,9 +583,6 @@
     const grid = document.querySelector("#badge-grid");
     const emptyState = document.querySelector("#empty-state");
     const search = document.querySelector("#search");
-    const sortOrder = document.querySelector("#sort-order");
-    const searchToggle = document.querySelector("#search-toggle");
-    const contentSearch = document.querySelector("#content-search");
     const contentSearchForm = document.querySelector("#content-search-form");
     const contentSearchInput = document.querySelector("#content-search-input");
     const contentSearchSummary = document.querySelector("#content-search-summary");
@@ -643,20 +624,9 @@
       return !term || haystack.includes(term);
     }
 
-    function sortedBadges(list) {
-      const sorted = [...list];
-      if (sortOrder.value === "oldest") {
-        sorted.sort((a, b) => a.year - b.year || a.title.localeCompare(b.title));
-      } else if (sortOrder.value === "words") {
-        sorted.sort((a, b) => b.words - a.words || b.year - a.year);
-      } else {
-        sorted.sort((a, b) => b.year - a.year || b.title.localeCompare(a.title));
-      }
-      return sorted;
-    }
-
     function render() {
-      const visible = sortedBadges(badges.filter(matchesFilters));
+      const visible = badges.filter(matchesFilters)
+        .sort((a, b) => b.year - a.year || b.title.localeCompare(a.title));
 
       grid.innerHTML = visible.map((badge) => {
         const href = badge.link || "#wall";
@@ -684,7 +654,7 @@
       if (!badge.link) event.preventDefault();
     });
 
-    [search, sortOrder].forEach((control) => control.addEventListener("input", render));
+    search.addEventListener("input", render);
 
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, (char) => ({
@@ -707,13 +677,20 @@
       return { term, quoted };
     }
 
+    function normalizeSearchText(value) {
+      return value
+        .toLowerCase()
+        .replace(/[\u2018\u2019\u201A\u201B\u2032]/g, "'")
+        .replace(/[\u201C\u201D\u201E\u201F\u2033]/g, '"');
+    }
+
     function isWordChar(char) {
       return /[a-z0-9_]/i.test(char || "");
     }
 
     function findContentMatches(text, query) {
-      const lowerText = text.toLowerCase();
-      const lowerTerm = query.term.toLowerCase();
+      const lowerText = normalizeSearchText(text);
+      const lowerTerm = normalizeSearchText(query.term);
       const matches = [];
       let index = lowerText.indexOf(lowerTerm);
       while (index !== -1) {
@@ -727,8 +704,7 @@
       return matches;
     }
 
-    function snippetFor(text, query) {
-      const index = findContentMatches(text, query)[0];
+    function snippetForMatch(text, query, index) {
       const start = Math.max(0, index - 84);
       const end = Math.min(text.length, index + query.term.length + 116);
       const prefix = start > 0 ? "..." : "";
@@ -736,6 +712,20 @@
       const snippet = `${prefix}${text.slice(start, end).replace(/\s+/g, " ").trim()}${suffix}`;
       const escapedTerm = query.term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       return escapeHtml(snippet).replace(new RegExp(escapedTerm, "gi"), (match) => `<mark>${match}</mark>`);
+    }
+
+    function snippetsFor(text, query) {
+      const matches = findContentMatches(text, query);
+      const snippets = [];
+      let lastEnd = -1;
+      for (const index of matches) {
+        const start = Math.max(0, index - 84);
+        if (start <= lastEnd) continue;
+        snippets.push(snippetForMatch(text, query, index));
+        lastEnd = Math.min(text.length, index + query.term.length + 116);
+        if (snippets.length === 5) break;
+      }
+      return snippets;
     }
 
     function runContentSearch() {
@@ -762,23 +752,11 @@
           <article class="result-card">
             <h3><a href="${badge.link}">${escapeHtml(badge.title)}</a></h3>
             <div class="badge-meta">${metaText(badge).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}<span>${matches} matches</span></div>
-            <p class="snippet">${snippetFor(doc.text, query)}</p>
+            ${snippetsFor(doc.text, query).map((snippet) => `<p class="snippet">${snippet}</p>`).join("")}
           </article>
         `).join("")
         : '<p class="empty show">No write-ups match that search.</p>';
     }
-
-    searchToggle.addEventListener("click", () => {
-      const isOpen = contentSearch.classList.toggle("show");
-      searchToggle.setAttribute("aria-expanded", String(isOpen));
-      if (isOpen) {
-        if (!contentSearchInput.value && search.value.trim()) {
-          contentSearchInput.value = search.value.trim();
-          runContentSearch();
-        }
-        contentSearchInput.focus();
-      }
-    });
 
     contentSearchForm.addEventListener("submit", (event) => {
       event.preventDefault();
