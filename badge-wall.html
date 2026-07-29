@@ -190,43 +190,10 @@
       font-weight: 700;
     }
 
-    .hero-panel,
-    .controls,
-    .details {
+    .controls {
       border: var(--border);
       background: var(--panel);
       box-shadow: var(--shadow);
-    }
-
-    .hero-panel {
-      padding: 16px;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .stat {
-      min-height: 84px;
-      padding: 12px;
-      border: 1px solid rgba(0, 217, 255, 0.38);
-      background: rgba(0, 217, 255, 0.08);
-    }
-
-    .stat strong {
-      display: block;
-      color: var(--gold);
-      font-size: 1.8rem;
-      line-height: 1;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 900;
-      text-transform: uppercase;
     }
 
     main {
@@ -238,7 +205,7 @@
       top: 0;
       z-index: 5;
       display: grid;
-      grid-template-columns: minmax(210px, 1fr) auto auto;
+      grid-template-columns: minmax(210px, 1fr) minmax(150px, auto) minmax(170px, auto);
       gap: 12px;
       align-items: center;
       margin-bottom: 22px;
@@ -293,10 +260,7 @@
     }
 
     .wall-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 340px;
-      gap: 22px;
-      align-items: start;
+      display: block;
     }
 
     .badge-grid {
@@ -315,13 +279,10 @@
       color: var(--ink);
       text-decoration: none;
       box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-      transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
     }
 
-    .badge-card:hover,
-    .badge-card:focus-visible,
-    .badge-card.active {
-      transform: translate(3px, 3px);
+    .badge-card:focus-visible {
       border-color: var(--gold);
       box-shadow: 0 0 24px rgba(250, 255, 0, 0.22);
       outline: none;
@@ -390,10 +351,6 @@
       filter: drop-shadow(0 0 16px color-mix(in srgb, var(--accent) 50%, transparent));
     }
 
-    .details .badge-art img {
-      max-height: 212px;
-    }
-
     .badge-year {
       display: grid;
       place-items: center;
@@ -429,40 +386,66 @@
       font-size: 0.96rem;
     }
 
-    .details {
-      position: sticky;
-      top: 92px;
-      padding: 16px;
-    }
-
-    .details .badge-art {
-      min-height: 220px;
-      margin-bottom: 14px;
-    }
-
-    .detail-title {
-      color: var(--gold);
-    }
-
-    .detail-link {
-      display: inline-flex;
-      justify-content: center;
-      width: 100%;
-      min-height: 46px;
-      margin-top: 12px;
-      padding: 12px 14px;
+    .content-search {
+      display: none;
+      margin-bottom: 22px;
+      padding: 14px;
       border: var(--border);
-      background: rgba(0, 255, 159, 0.08);
-      box-shadow: 0 0 20px rgba(0, 255, 159, 0.25);
-      font-weight: 900;
-      text-decoration: none;
-      text-transform: uppercase;
+      background: var(--panel);
+      box-shadow: var(--shadow);
     }
 
-    .detail-link:hover,
-    .detail-link:focus-visible {
+    .content-search.show {
+      display: block;
+    }
+
+    .content-search-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .content-search h2 {
+      margin: 18px 0 10px;
+      font-size: clamp(1.35rem, 4vw, 2.2rem);
+    }
+
+    .result-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .result-card {
+      padding: 12px;
+      border: 1px solid rgba(153, 175, 189, 0.32);
+      background: rgba(5, 5, 8, 0.72);
+    }
+
+    .result-card h3 {
+      margin-bottom: 6px;
       color: var(--gold);
-      outline: none;
+    }
+
+    .result-card a {
+      text-decoration: none;
+    }
+
+    .result-card a:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .snippet {
+      margin: 8px 0 0;
+      color: #d8f8ff;
+      font-size: 0.94rem;
+    }
+
+    mark {
+      background: rgba(250, 255, 0, 0.26);
+      color: var(--ink);
+      padding: 0 2px;
     }
 
     .empty {
@@ -486,14 +469,8 @@
     }
 
     @media (max-width: 920px) {
-      .hero,
-      .wall-layout {
+      .hero {
         grid-template-columns: 1fr;
-      }
-
-      .details {
-        position: static;
-        order: -1;
       }
     }
 
@@ -515,9 +492,10 @@
         position: static;
       }
 
-      .stat-grid {
+      .content-search-form {
         grid-template-columns: 1fr;
       }
+
     }
   </style>
 </head>
@@ -530,8 +508,6 @@
       </a>
       <div class="nav-links">
         <a href="index.html">/home</a>
-        <a href="#wall">/wall</a>
-        <a href="https://docs.google.com/spreadsheets/d/15o3z7wlktAaBD_ks78MG4lJwL-hXyvGHKvHQhCpbPlI/edit">source sheet</a>
       </div>
     </nav>
 
@@ -539,32 +515,16 @@
       <div>
         <p class="eyebrow">Virtual badge wall</p>
         <h1>Badge Wall</h1>
-        <p class="hero-copy">A clickable shelf of DEF CON, DaveCon, and PhreakNIC write-ups. </p>
+        <!--<p class="hero-copy">A clickable shelf of DEF CON, DaveCon, and PhreakNIC write-ups. </p>-->
       </div>
-      <aside class="hero-panel" aria-label="Badge wall statistics">
-        <div class="stat-grid">
-          <div class="stat"><strong id="total-count">25</strong><span>indexed rows</span></div>
-          <div class="stat"><strong id="linked-count">24</strong><span>write-up links</span></div>
-          <div class="stat"><strong>2006</strong><span>first entry</span></div>
-          <div class="stat"><strong>2026</strong><span>latest row</span></div>
-        </div>
-      </aside>
     </div>
   </header>
 
   <main class="shell" id="wall">
     <section class="controls" aria-label="Badge wall controls">
       <div class="control-field">
-        <label for="search">Search</label>
+        <label for="search">Filter badges</label>
         <input id="search" type="search" placeholder="Search year, venue, synopsis...">
-      </div>
-      <div class="control-field">
-        <label for="event-filter">Event</label>
-        <select id="event-filter">
-          <option value="all">All events</option>
-          <option value="DEF CON">DEF CON</option>
-          <option value="PhreakNIC">PhreakNIC</option>
-        </select>
       </div>
       <div class="control-field">
         <label for="sort-order">Sort</label>
@@ -574,7 +534,19 @@
           <option value="words">Longest write-up</option>
         </select>
       </div>
-      <button type="button" id="random-pick">Random badge</button>
+      <button type="button" id="search-toggle" aria-expanded="false" aria-controls="content-search">Search content</button>
+    </section>
+
+    <section class="content-search" id="content-search" aria-label="Write-up content search">
+      <form class="content-search-form" id="content-search-form">
+        <div class="control-field">
+          <label for="content-search-input">Search write-ups</label>
+          <input id="content-search-input" type="search" placeholder="Toxic BBQ, tacos, badge hacking...">
+        </div>
+        <button type="submit">Search</button>
+      </form>
+      <h2 id="content-search-summary">Enter a search term</h2>
+      <div class="result-list" id="content-search-results" aria-live="polite"></div>
     </section>
 
     <section class="wall-layout">
@@ -582,14 +554,14 @@
         <div class="empty" id="empty-state">No badges match that filter.</div>
         <div class="badge-grid" id="badge-grid" aria-live="polite"></div>
       </div>
-      <aside class="details" id="details" aria-live="polite"></aside>
     </section>
   </main>
 
   <footer class="shell">
-    Built from the Google Sheet named Index, tab Sheet1. Real badge thumbnails are loaded from the exported sheet resources, with generated art used only where a thumbnail is missing.
+    
   </footer>
 
+  <script src="badge-wall-search-data.js"></script>
   <script>
     const badges = [
       { title: "2006 - DEF CON 14", year: 2006, event: "DEF CON", location: "Riviera", attendees: "", words: 1689, count: 1, image: "badge-wall/DC14.png", link: "https://docs.google.com/document/d/1CYHrL5f7RB9Euj-vb7fVBVvJgf86Mzr54suTziqo9GM/edit", synopsis: "First DEF CON trip report: arrival jitters, Toxic BBQ, hallway introductions, talks, Hacker Jeopardy, late-night wandering, and the first real feeling of finding a second home." },
@@ -625,16 +597,15 @@
     ];
 
     const grid = document.querySelector("#badge-grid");
-    const details = document.querySelector("#details");
     const emptyState = document.querySelector("#empty-state");
     const search = document.querySelector("#search");
-    const eventFilter = document.querySelector("#event-filter");
     const sortOrder = document.querySelector("#sort-order");
-    const randomPick = document.querySelector("#random-pick");
-    let activeTitle = badges[0].title;
-
-    document.querySelector("#total-count").textContent = badges.length;
-    document.querySelector("#linked-count").textContent = badges.filter((badge) => badge.link).length;
+    const searchToggle = document.querySelector("#search-toggle");
+    const contentSearch = document.querySelector("#content-search");
+    const contentSearchForm = document.querySelector("#content-search-form");
+    const contentSearchInput = document.querySelector("#content-search-input");
+    const contentSearchSummary = document.querySelector("#content-search-summary");
+    const contentSearchResults = document.querySelector("#content-search-results");
 
     function styleForBadge(badge) {
       const colors = palette[(badge.year + badge.count) % palette.length];
@@ -669,8 +640,7 @@
     function matchesFilters(badge) {
       const term = search.value.trim().toLowerCase();
       const haystack = `${badge.title} ${badge.event} ${badge.location} ${badge.attendees} ${badge.synopsis}`.toLowerCase();
-      const eventMatches = eventFilter.value === "all" || badge.event === eventFilter.value;
-      return eventMatches && (!term || haystack.includes(term));
+      return !term || haystack.includes(term);
     }
 
     function sortedBadges(list) {
@@ -685,25 +655,12 @@
       return sorted;
     }
 
-    function renderDetails(badge) {
-      details.innerHTML = `
-        ${badgeArt(badge)}
-        <h2 class="detail-title">${badge.title}</h2>
-        <div class="badge-meta">${metaText(badge).map((item) => `<span>${item}</span>`).join("")}</div>
-        <p class="synopsis" style="margin-top:12px;">${badge.synopsis}</p>
-        ${badge.link ? `<a class="detail-link" href="${badge.link}">Open write-up</a>` : `<span class="detail-link" aria-disabled="true">Write-up pending</span>`}
-      `;
-    }
-
     function render() {
       const visible = sortedBadges(badges.filter(matchesFilters));
-      if (!visible.some((badge) => badge.title === activeTitle) && visible.length) {
-        activeTitle = visible[0].title;
-      }
 
       grid.innerHTML = visible.map((badge) => {
-        const href = badge.link || "#details";
-        const classes = ["badge-card", badge.title === activeTitle ? "active" : "", badge.link ? "" : "pending"].filter(Boolean).join(" ");
+        const href = badge.link || "#wall";
+        const classes = ["badge-card", badge.link ? "" : "pending"].filter(Boolean).join(" ");
         return `
           <a class="${classes}" href="${href}" data-title="${badge.title}" ${badge.link ? "" : "aria-disabled=\"true\""}>
             ${badgeArt(badge)}
@@ -717,8 +674,6 @@
       }).join("");
 
       emptyState.classList.toggle("show", visible.length === 0);
-      const active = badges.find((badge) => badge.title === activeTitle) || visible[0];
-      if (active) renderDetails(active);
     }
 
     grid.addEventListener("click", (event) => {
@@ -726,33 +681,108 @@
       if (!card) return;
       const badge = badges.find((item) => item.title === card.dataset.title);
       if (!badge) return;
-      activeTitle = badge.title;
-      renderDetails(badge);
-      document.querySelectorAll(".badge-card").forEach((item) => item.classList.toggle("active", item.dataset.title === activeTitle));
       if (!badge.link) event.preventDefault();
     });
 
-    grid.addEventListener("mouseover", (event) => {
-      const card = event.target.closest(".badge-card");
-      if (!card) return;
-      const badge = badges.find((item) => item.title === card.dataset.title);
-      if (badge) {
-        activeTitle = badge.title;
-        renderDetails(badge);
-        document.querySelectorAll(".badge-card").forEach((item) => item.classList.toggle("active", item.dataset.title === activeTitle));
+    [search, sortOrder].forEach((control) => control.addEventListener("input", render));
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function badgeForDocument(doc) {
+      return badges.find((badge) => badge.link && badge.link.includes(doc.id));
+    }
+
+    function parseContentQuery(value) {
+      const raw = value.trim();
+      const quoted = raw.length >= 2 && raw.startsWith('"') && raw.endsWith('"');
+      const term = quoted ? raw.slice(1, -1).trim() : raw;
+      return { term, quoted };
+    }
+
+    function isWordChar(char) {
+      return /[a-z0-9_]/i.test(char || "");
+    }
+
+    function findContentMatches(text, query) {
+      const lowerText = text.toLowerCase();
+      const lowerTerm = query.term.toLowerCase();
+      const matches = [];
+      let index = lowerText.indexOf(lowerTerm);
+      while (index !== -1) {
+        const before = lowerText[index - 1];
+        const after = lowerText[index + lowerTerm.length];
+        if (!query.quoted || (!isWordChar(before) && !isWordChar(after))) {
+          matches.push(index);
+        }
+        index = lowerText.indexOf(lowerTerm, index + lowerTerm.length);
+      }
+      return matches;
+    }
+
+    function snippetFor(text, query) {
+      const index = findContentMatches(text, query)[0];
+      const start = Math.max(0, index - 84);
+      const end = Math.min(text.length, index + query.term.length + 116);
+      const prefix = start > 0 ? "..." : "";
+      const suffix = end < text.length ? "..." : "";
+      const snippet = `${prefix}${text.slice(start, end).replace(/\s+/g, " ").trim()}${suffix}`;
+      const escapedTerm = query.term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      return escapeHtml(snippet).replace(new RegExp(escapedTerm, "gi"), (match) => `<mark>${match}</mark>`);
+    }
+
+    function runContentSearch() {
+      const query = parseContentQuery(contentSearchInput.value);
+      if (!query.term) {
+        contentSearchSummary.textContent = "Enter a search term";
+        contentSearchResults.innerHTML = "";
+        return;
+      }
+
+      const documents = Array.isArray(window.badgeSearchDocuments) ? window.badgeSearchDocuments : [];
+      const results = documents.map((doc) => {
+        const badge = badgeForDocument(doc);
+        const text = doc.text || "";
+        const matches = findContentMatches(text, query);
+        return { doc, badge, matches: matches.length };
+      }).filter((result) => result.matches > 0 && result.badge)
+        .sort((a, b) => b.matches - a.matches || b.badge.year - a.badge.year);
+
+      const totalMatches = results.reduce((sum, result) => sum + result.matches, 0);
+      contentSearchSummary.textContent = `${results.length} write-ups · ${totalMatches} matches`;
+      contentSearchResults.innerHTML = results.length
+        ? results.slice(0, 12).map(({ doc, badge, matches }) => `
+          <article class="result-card">
+            <h3><a href="${badge.link}">${escapeHtml(badge.title)}</a></h3>
+            <div class="badge-meta">${metaText(badge).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}<span>${matches} matches</span></div>
+            <p class="snippet">${snippetFor(doc.text, query)}</p>
+          </article>
+        `).join("")
+        : '<p class="empty show">No write-ups match that search.</p>';
+    }
+
+    searchToggle.addEventListener("click", () => {
+      const isOpen = contentSearch.classList.toggle("show");
+      searchToggle.setAttribute("aria-expanded", String(isOpen));
+      if (isOpen) {
+        if (!contentSearchInput.value && search.value.trim()) {
+          contentSearchInput.value = search.value.trim();
+          runContentSearch();
+        }
+        contentSearchInput.focus();
       }
     });
 
-    [search, eventFilter, sortOrder].forEach((control) => control.addEventListener("input", render));
-
-    randomPick.addEventListener("click", () => {
-      const visible = sortedBadges(badges.filter(matchesFilters));
-      if (!visible.length) return;
-      const badge = visible[Math.floor(Math.random() * visible.length)];
-      activeTitle = badge.title;
-      render();
-      const card = document.querySelector(`[data-title="${CSS.escape(badge.title)}"]`);
-      if (card) card.scrollIntoView({ block: "center", behavior: "smooth" });
+    contentSearchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      runContentSearch();
     });
 
     render();
