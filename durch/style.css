@@ -344,9 +344,14 @@ h1 small {
   white-space: nowrap;
 }
 
-.marquee div {
+.marquee-track {
+  display: flex;
   width: max-content;
   animation: proclamation 24s linear infinite;
+}
+
+.marquee-track span {
+  flex: none;
 }
 
 main {
