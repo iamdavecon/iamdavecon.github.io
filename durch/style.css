@@ -1153,19 +1153,115 @@ blockquote cite {
 }
 
 @media print {
-  body * { visibility: hidden; }
-  body { background: white; }
-  .certificate,
-  .certificate * { visibility: visible; }
+  @page {
+    size: letter;
+    margin: .35in;
+  }
+
+  html,
+  body {
+    width: auto;
+    height: auto;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: black;
+    background: white !important;
+  }
+
+  body::before,
+  .skip-link,
+  .site-nav,
+  .site-header,
+  .site-footer,
+  .toast,
+  main > section:not(.initiation-section),
+  .initiation-copy {
+    display: none !important;
+  }
+
+  main,
+  .initiation-section {
+    display: block !important;
+    width: auto !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    border: 0 !important;
+  }
+
   .certificate {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    min-height: 100vh;
+    display: block !important;
+    position: relative !important;
+    inset: auto !important;
+    box-sizing: border-box;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: 9.65in;
+    margin: 0 !important;
+    padding: .38in .45in !important;
     color: black;
     background: white;
     border-color: black;
     box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
-  .print-button { display: none; }
+
+  .certificate::before,
+  .certificate::after {
+    color: rgba(0, 0, 0, .08);
+    font-size: 24pt;
+  }
+
+  .certificate-overline {
+    margin: 0;
+    font-size: 8pt;
+  }
+
+  .mini-seal {
+    width: .82in;
+    margin: .18in auto;
+    border-color: black;
+    color: black;
+    font-size: 22pt;
+  }
+
+  .certificate h3 {
+    margin: .18in 0;
+    font-size: 30pt;
+    line-height: .95;
+  }
+
+  .certificate-name {
+    margin: .16in 0;
+    font-size: 22pt;
+  }
+
+  .certificate-title {
+    margin: 0;
+    color: black;
+    font-size: 10pt;
+  }
+
+  .certificate dl {
+    gap: .45in;
+    margin: .28in 0;
+  }
+
+  .certificate-footnote {
+    color: black;
+    font-size: 8pt;
+  }
+
+  .certificate-signatures {
+    gap: .45in;
+    margin: .45in 0 0;
+    font-size: 8pt;
+  }
+
+  .print-button {
+    display: none !important;
+  }
 }
