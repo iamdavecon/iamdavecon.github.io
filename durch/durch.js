@@ -75,7 +75,7 @@
     "The bearer may question this document at any time.",
     "Contradictions in this certificate indicate normal operation.",
     "No title herein outranks consent, safety, or venue staff.",
-    "Possible Davehood is not known to cause actual Davehood.",
+    "Actual Davehood is known to cause additional paperwork.",
     "Filed under: YES / NO / BOTH / ASK LATER."
   ];
 
