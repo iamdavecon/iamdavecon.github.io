@@ -550,16 +550,30 @@ h3 {
 
 .org-chart {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  grid-template-columns: minmax(0, 420px);
+  justify-content: center;
+  gap: 1.1rem;
   margin-bottom: 3rem;
 }
 
 .org-card {
   position: relative;
+  width: 100%;
   padding: 1.2rem;
   background: var(--paper-light);
   border: var(--rule);
+  text-align: center;
+}
+
+.org-card img {
+  display: block;
+  width: calc(100% + 2.4rem);
+  height: auto;
+  max-width: none;
+  aspect-ratio: 1;
+  margin: -1.2rem -1.2rem 1.2rem;
+  object-fit: cover;
+  border-bottom: var(--rule);
 }
 
 .org-card::before {
@@ -572,12 +586,10 @@ h3 {
 }
 
 .org-card.prime {
-  grid-column: 1 / -1;
-  width: min(360px, 100%);
-  margin: 0 auto 1.1rem;
+  width: 100%;
+  margin: 0;
   color: var(--paper-light);
   background: var(--ink);
-  text-align: center;
 }
 
 .org-card.prime::before { display: none; }
@@ -1057,7 +1069,6 @@ blockquote cite {
 
   .doctrine-card { grid-column: span 6; }
   .doctrine-card:nth-child(5) { grid-column: 1 / -1; }
-  .org-chart { grid-template-columns: repeat(2, 1fr); }
   .department-grid { grid-template-columns: repeat(2, 1fr); }
   .ritual-grid { grid-template-columns: repeat(2, 1fr); }
   .canon-layout { grid-template-columns: 1fr; }
