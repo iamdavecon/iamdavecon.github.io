@@ -300,7 +300,6 @@
     }
 
     .link-grid,
-    .release-grid,
     .group-grid,
     .etc-grid {
       display: grid;
@@ -327,8 +326,7 @@
       outline: none;
     }
 
-    .tile strong,
-    .release strong {
+    .tile strong {
       display: block;
       margin-bottom: 8px;
       font-size: 1.2rem;
@@ -336,8 +334,7 @@
       text-transform: uppercase;
     }
 
-    .tile span,
-    .release span {
+    .tile span {
       display: block;
       color: var(--muted);
       font-weight: 700;
@@ -346,26 +343,6 @@
     .tile.danger strong {
       color: var(--gold);
       text-shadow: 0 0 14px rgba(250, 255, 0, 0.58);
-    }
-
-    .release-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .release {
-      min-height: 120px;
-      padding: 16px;
-      border: 1px solid rgba(0, 217, 255, 0.58);
-      background: var(--panel-strong);
-      text-decoration: none;
-      box-shadow: 0 0 18px rgba(185, 103, 255, 0.24);
-    }
-
-    .release:hover,
-    .release:focus-visible {
-      background: rgba(185, 103, 255, 0.16);
-      outline: 2px solid var(--gold);
-      outline-offset: 2px;
     }
 
     .badge-row {
@@ -458,8 +435,7 @@
 
       .link-grid,
       .group-grid,
-      .etc-grid,
-      .release-grid {
+      .etc-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -491,8 +467,7 @@
 
       .link-grid,
       .group-grid,
-      .etc-grid,
-      .release-grid {
+      .etc-grid {
         grid-template-columns: 1fr;
       }
 
@@ -512,7 +487,6 @@
       <div class="nav-links">
         <a href="#home">/home</a>
         <a href="badge-wall.html">/badges</a>
-        <a href="#release-notes">releases</a>
         <a href="#groups">/groups</a>
         <a href="#faq">/FAQ</a>
       </div>
@@ -565,40 +539,6 @@
           <span>Choose your own path, then blame Dave for the consequences.</span>
         </a>
 
-      </div>
-    </section>
-
-    <section id="release-notes">
-      <h2>Release Notes</h2>
-      <p class="section-note">DaveCon versions are real enough to cite and mysterious enough to make procurement nervous.</p>
-      <div class="release-grid">
-        <a class="release" href="https://docs.google.com/document/d/1AzK0nzqCdaiZECCq4kKoY3V3NjuLak1vkBxOy_BbJ88">
-          <strong>4.2</strong>
-          <span>Distributed Daves as a Service.</span>
-        </a>
-        <a class="release" href="https://photos.google.com/album/AF1QipNXF4XlMEriFp8JZjoelrdq0BK1FxjSZw8ws9ZB">
-          <strong>4.2 Photos</strong>
-          <span>Evidence locker. Do not make eye contact with timestamps.</span>
-        </a>
-        <a class="release" href="https://docs.google.com/document/d/1oaGeMpaKX69vDvRT8u-n9noyw66Tj9VWQcM_10Sb85A">
-          <strong>3.14</strong>
-          <span>Round, irrational, deliciously documented.</span>
-        </a>
-        <a class="release" href="https://docs.google.com/document/d/19L7Xp_Kvz2vSCQtCk9RlQ3hHlzpowm8FXnbNuoqx-NI">
-          <strong>2.1</strong>
-          <span>Electric (r)evolution.</span>
-        </a>
-        <a class="release" href="https://docs.google.com/document/d/10pknMyp7eMQa5K1S5WkilPujUupOhHGwtNkq9URTMqg">
-          <strong>1.0</strong>
-          <span>The first stable Dave. Allegedly.</span>
-        </a>
-        <a class="release" href="https://docs.google.com/document/d/1GsItmplrJTlb02CClvNM4Jv8sW6bOXMFimozth7cOLA/edit#bookmark=id.o19r0bhabfy6">
-          <strong>0.0 Beta</strong>
-          <span>Before DaveCon learned to stand upright.</span>
-        </a>
-      </div>
-      <div class="badge-row" aria-label="Release descriptors">
-        <span class="badge">Patch notes may contain lore</span>
       </div>
     </section>
 
