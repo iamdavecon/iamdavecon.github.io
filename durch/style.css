@@ -189,7 +189,7 @@ h1 {
 h1 > span {
   display: block;
   margin-left: -.06em;
-  font-size: clamp(5.4rem, 18vw, 13rem);
+  font-size: clamp(5.4rem, 10vw, 11.25rem);
   font-weight: 1000;
   line-height: .7;
   letter-spacing: -.1em;
