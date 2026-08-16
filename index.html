@@ -572,35 +572,8 @@
 
     <section id="faq">
       <h2>/FAQ</h2>
-      <div class="faq-list">
-        <details open>
-          <summary>Who is Dave?</summary>
-          <p>You are, Dave. It has been you, the whole time. Ooooh...</p>
-        </details>
-        <details open>
-          <summary>What is DaveCon?</summary>
-          <p>Well, you're looking at it, right now, so you tell me.</p>
-        </details>
-        <details open>
-          <summary>Where is DaveCon?</summary>
-          <p>It's right behind you.</p>
-        </details>
-        <details open>
-          <summary>How do I find DaveCon?</summary>
-          <p>DaveCon finds you.</p>
-        </details>
-        <details open>
-          <summary>When is DaveCon?</summary>
-          <p>DaveCon is Now.</p>
-        </details>
-        <details open>
-          <summary>Why is DaveCon?</summary>
-          <p>Whoa...</p>
-        </details>
-        <details open>
-          <summary>Is DaveCon canceled?</summary>
-          <p>Hell no.</p>
-        </details>
+      <div class="faq-list" id="faq-list" aria-live="polite">
+        <p>Loading FAQ...</p>
       </div>
     </section>
 
@@ -623,5 +596,19 @@
   <footer class="footer">
     <span>Unofficially official, officially Dave</span>
   </footer>
+  <script>
+    fetch("faq.html")
+      .then((response) => {
+        if (!response.ok) throw new Error(`FAQ request failed: ${response.status}`);
+        return response.text();
+      })
+      .then((html) => {
+        document.getElementById("faq-list").innerHTML = html;
+      })
+      .catch(() => {
+        document.getElementById("faq-list").innerHTML =
+          '<p>Could not load the FAQ. <a href="faq.html">Open it directly.</a></p>';
+      });
+  </script>
 </body>
 </html>
