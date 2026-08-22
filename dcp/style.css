@@ -58,7 +58,8 @@ h3 { margin: 0 0 8px; font-size: 1.18rem; }
 .dcp-controls input:focus, .dcp-controls select:focus { outline: 2px solid var(--dcp-gold); outline-offset: 2px; }
 .dcp-index { display: grid; gap: 10px; }
 .dcp-record { display: grid; grid-template-columns: 100px minmax(0, 1fr) auto; gap: 16px; padding: 17px; border: 1px solid rgba(0,217,255,.38); background: var(--dcp-panel-soft); }
-.dcp-record:hover { border-color: var(--dcp-gold); }
+.dcp-record:hover, .dcp-record[role="link"]:focus-visible { border-color: var(--dcp-gold); }
+.dcp-record[role="link"] { cursor: pointer; }
 .dcp-number { color: var(--dcp-mint); font: 700 1.02rem Consolas, monospace; }
 .dcp-record h3 { margin-bottom: 5px; }
 .dcp-record h3 a { color: var(--dcp-ink); text-decoration: none; }
@@ -66,7 +67,7 @@ h3 { margin: 0 0 8px; font-size: 1.18rem; }
 .dcp-abstract { margin: 0; color: var(--dcp-muted); font-size: .94rem; }
 .dcp-record-meta { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; align-content: start; }
 .dcp-badge { display: inline-block; padding: 3px 7px; border: 1px solid currentColor; font: 700 .68rem Consolas, monospace; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
-.status-standard { color: var(--dcp-mint); } .status-accepted { color: var(--dcp-blue); } .status-disputed { color: var(--dcp-gold); } .status-proposed { color: #d68cff; } .status-heretical { color: var(--dcp-red); } .status-deprecated { color: #9b9b9b; }
+.status-standard { color: var(--dcp-mint); } .status-accepted { color: var(--dcp-blue); } .status-disputed { color: var(--dcp-gold); } .status-proposed { color: #d68cff; } .status-draft { color: #ff9c66; } .status-heretical { color: var(--dcp-red); } .status-deprecated { color: #9b9b9b; } .status-lost { color: #7d8792; }
 .dcp-process { display: grid; grid-template-columns: repeat(13, minmax(0, 1fr)); gap: 8px; align-items: stretch; }
 .dcp-process-step { display: grid; place-items: center; min-height: 92px; padding: 10px; border: 1px solid var(--dcp-rule); background: #081012; color: var(--dcp-gold); text-align: center; font: 700 .78rem/1.25 Consolas, monospace; text-transform: uppercase; }
 .dcp-process-arrow { display: grid; place-items: center; color: var(--dcp-red); font-size: 1.4rem; }
