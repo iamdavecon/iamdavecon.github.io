@@ -52,13 +52,12 @@
   </main>
   <footer class="dcp-footer dcp-wrap"><p>Unofficially official, officially Dave // <a href="../">Return to DaveCon</a></p></footer>
   <script>
+    const index = document.querySelector('#dcp-index');
+    [...index.children].sort((a, b) => Number(a.querySelector('.dcp-number').textContent.replace(/\D/g, '')) - Number(b.querySelector('.dcp-number').textContent.replace(/\D/g, ''))).forEach(record => index.append(record));
     const search = document.querySelector('#dcp-search'), status = document.querySelector('#dcp-status'), category = document.querySelector('#dcp-category'), records = [...document.querySelectorAll('.dcp-record')], count = document.querySelector('#results-count'), empty = document.querySelector('#no-results');
     function filterDcp() { const term = search.value.trim().toLowerCase(), wantedStatus = status.value, wantedCategory = category.value; let visible = 0; records.forEach(record => { const match = (!term || record.dataset.search.includes(term)) && (!wantedStatus || record.dataset.status === wantedStatus) && (!wantedCategory || record.dataset.category === wantedCategory); record.hidden = !match; if (match) visible++; }); count.textContent = `Showing ${visible} document${visible === 1 ? '' : 's'}`; empty.hidden = visible !== 0; }
     [search, status, category].forEach(control => control.addEventListener('input', filterDcp));
-    const restrictedLink = document.querySelector('[data-dcp-restricted]'), restrictedDialog = document.querySelector('#dcp-2001-dialog');
-    restrictedLink.addEventListener('click', event => { event.preventDefault(); if (typeof restrictedDialog.showModal === 'function') restrictedDialog.showModal(); else window.alert("I’m afraid I can’t do that, Dave."); });
-    restrictedDialog.addEventListener('click', event => { if (event.target === restrictedDialog || event.target.matches('[data-close-dcp-dialog]')) restrictedDialog.close(); });
-    const fullTextRoutes = { 'DCP-0001': '0001/', 'DCP-0002': '0002/', 'DCP-0004': '0004/', 'DCP-0005': '0005/', 'DCP-0006': '0006/', 'DCP-0007': '0007/', 'DCP-0010': '0010/', 'DCP-0066': '0066/' };
+    const fullTextRoutes = { 'DCP-0001': '0001/', 'DCP-0002': '0002/', 'DCP-0003': '0003/', 'DCP-0004': '0004/', 'DCP-0005': '0005/', 'DCP-0006': '0006/', 'DCP-0007': '0007/', 'DCP-0010': '0010/', 'DCP-0013': '0013/', 'DCP-0014': '0014/', 'DCP-0023': '0023/', 'DCP-0042': '0042/', 'DCP-0066': '0066/', 'DCP-0101': '0101/', 'DCP-0666': '0666/', 'DCP-1337': '1337/', 'DCP-2001': '2001/', 'DCP-8080': '8080/', 'DCP-9001': '9001/' };
     document.querySelectorAll('.dcp-record').forEach(record => { const number = record.querySelector('.dcp-number').textContent.trim(); const route = fullTextRoutes[number]; if (!route) return; record.setAttribute('role', 'link'); record.setAttribute('tabindex', '0'); record.dataset.dcpHref = route; record.addEventListener('click', event => { if (event.target.closest('a, button, select, input')) return; window.location.href = route; }); record.addEventListener('keydown', event => { if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('a, button, select, input')) { event.preventDefault(); window.location.href = route; } }); });
   </script>
 </body>
