@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A completely unofficial checklist of DaveCon rituals, sightings, pilgrimages, hacker wildlife, and questionable decisions.">
+  <meta property="og:title" content="DaveCon Field Checklist">
+  <meta property="og:description" content="Complete the tasks. Acquire the lore. Dave responsibly.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://iamdavecon.github.io/checklist.html">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="checklist.css">
+  <title>DaveCon Field Checklist | Acquire the Lore</title>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to checklist</a>
+  <div class="notice-bar"><span>DCFC-1.0 // FIELD EXERCISE</span><span>Local storage enabled // no server required</span></div>
+  <header class="page-wrap site-header">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="wordmark" href="./">DAVE<span>CON_</span></a>
+      <div class="nav-links"><a href="./">Home</a><a href="field-guide/">Field Guide</a><a href="durch/">Durch</a><a href="dcp/">DCPs</a><a href="badge-wall.html">Badge Wall</a></div>
+    </nav>
+    <div class="hero">
+      <div>
+        <p class="kicker">Unofficial field documentation / DEF CON adjacent</p>
+        <h1>DaveCon<br><em>Field Checklist</em></h1>
+        <p class="subtitle">Complete the tasks. Acquire the lore. Dave responsibly.</p>
+        <p class="intro">There is no official way to win DaveCon. This is an unofficial way to be suspiciously thorough about it.</p>
+      </div>
+      <div class="stamp" aria-label="Field exercise classification">FIELD<br><strong>EXERCISE</strong><br>6.6.6</div>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-wrap">
+    <section class="progress-panel" aria-labelledby="progress-title">
+      <div class="progress-heading"><div><p class="section-label">01 / current status</p><h2 id="progress-title">Dave Acquisition</h2></div><strong id="rank" class="rank">UNSTABLE</strong></div>
+      <div class="progress-stats"><span><b id="completed-count">1</b> / <b id="total-count">49</b> complete</span><span id="percentage">2%</span></div>
+      <div class="progress-track" role="progressbar" aria-label="Checklist completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="2"><span id="progress-fill"></span></div>
+      <p id="status-message" class="status-message">The paperwork has begun. This is already more official than expected.</p>
+    </section>
+
+    <section class="mission-panel" aria-labelledby="mission-title">
+      <div><p class="section-label">02 / dispatch</p><h2 id="mission-title">Need direction?</h2><p id="mission-text">Select a random incomplete task. The field has chosen.</p></div>
+      <button class="button primary" id="mission-button" type="button">Give Me a Dave Mission</button>
+    </section>
+
+    <section class="controls" aria-label="Checklist controls">
+      <label class="toggle"><input type="checkbox" id="incomplete-only"><span>Show incomplete only</span></label>
+      <label class="filter-label" for="category-filter">Filter category</label>
+      <select id="category-filter"><option value="all">All categories</option></select>
+      <button class="button subtle" id="share-button" type="button">Copy Progress Summary</button>
+    </section>
+
+    <div id="checklist" class="checklist" aria-live="polite"></div>
+
+    <section class="victory-panel">
+      <p class="section-label">Final determination</p>
+      <h2>The Actual Victory Condition</h2>
+      <p>Checking every box is not how you win.<br><strong>Return with the best story.</strong></p>
+      <p id="complete-message" class="complete-message" hidden>CHECKLIST COMPLETE. DAVE REMAINS UNRESOLVED.</p>
+    </section>
+
+    <section class="reset-panel"><p>Progress is saved on this device only. No login. No tribunal. Probably.</p><button class="button danger" id="reset-button" type="button">Reset Checklist</button></section>
+  </main>
+  <footer class="page-wrap site-footer"><p>Unofficially official, officially Dave.</p><a href="./">Return to DaveCon home</a></footer>
+  <script src="checklist.js"></script>
+</body>
+</html>
